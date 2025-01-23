@@ -1,13 +1,22 @@
+from urllib import request
 
-from fastapi import FastAPI
-#from sqlalchemy.sql.annotation import Annotated
-import models
+from fastapi import FastAPI, Request
+from .models import  Base
+from .database import engine
+from .routers import auth, todos, admin, users
+from fastapi.templating import Jinja2Templates
 
-from database import engine
-from routers import auth, todos, admin, users
 app = FastAPI()
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
+
+
+templates = Jinja2Templates(directory="TodoApp/templates")
+
+@app.get("/")
+def test(request: Request):
+    return templates.TemplateResponse("home.html", {"request": request})
+
 
 app.include_router(auth.router)
 app.include_router(todos.router)
