@@ -56,11 +56,11 @@ templates = Jinja2Templates(directory='TodoApp/templates')
 
 ### Pages ###
 
-@router.get("login-page")
+@router.get("/login-page")
 def render_login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
-@router.get("register-page")
+@router.get("/register-page")
 def render_register_page(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
 
